@@ -1,3 +1,6 @@
 **/*/.mypy_cache
 **/*/.vscode
 **/*/*.trash.*
+.vscode
+.mypy_cache
+*.trash.*
