@@ -15,12 +15,3 @@ def knapsack(C, w, v):
             z += v[i] * x[i]
             break
     return x, z
-
-
-# Example usage
-C = 50
-w = [10, 20, 30]
-v = [60, 100, 120]
-x, z = knapsack(C, w, v)
-print(f"x = {x}")
-print(f"z = {z}")
