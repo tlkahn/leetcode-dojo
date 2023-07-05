@@ -249,17 +249,20 @@ def KMP(text, pattern):
     j = 0  # Index for pattern
 
     while i < n:
-        if j < m and pattern[j] == text[i]:
-            i += 1
-            j += 1
-
-            if j == m:
-                return i - j
-        else:
-            if j != 0:
-                j = next_array[j - 1]
-            else:
+        if j < m:
+            if pattern[j] == text[i]:
                 i += 1
+                j += 1
+
+                if j == m:
+                    return i - j
+            else:
+                if j != 0:
+                    j = next_array[j - 1]
+                else:
+                    i += 1
+        else:
+            i += 1
 
     return -1
 
