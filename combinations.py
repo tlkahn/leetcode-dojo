@@ -121,7 +121,7 @@ import collections
 from itertools import islice
 
 
-def sliding_window(iterable, n):
+def sliding_windowA(iterable, n):
     # sliding_window('ABCDEFG', 4) --> ABCD BCDE CDEF DEFG
     it = iter(iterable)
     window = collections.deque(islice(it, n), maxlen=n)
@@ -130,3 +130,16 @@ def sliding_window(iterable, n):
     for x in it:
         window.append(x)
         yield tuple(window)
+
+
+from itertools import islice
+from collections import deque
+
+
+def sliding_window(iterable, n):
+    it = iter(iterable)
+    window = deque(islice(it, n), maxlen=n)
+
+    while len(window) == n:
+        yield tuple(window)
+        window.append(next(it))
