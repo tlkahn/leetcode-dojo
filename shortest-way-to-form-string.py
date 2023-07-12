@@ -110,15 +110,58 @@ class Solution:
         return ans  # Return the answer count
 
     def shortestWayD(self, source: str, target: str) -> int:
-        ans, sp = 0, 0
+        """
+        Minimalist's favorite
+        """
+        ans, tp = 0, 0
 
-        while sp < len(target):
-            start = sp
+        while tp < len(target):
+            start = tp
             for c in source:
-                if sp < len(target) and target[sp] == c:
-                    sp += 1
-            if sp == start:
+                if tp < len(target) and target[tp] == c:
+                    tp += 1
+            if tp == start:
                 return -1
             ans += 1
 
         return ans
+
+    def shortestWay(self, source: str, target: str) -> int:
+        def findNext(v, curr):
+            left = 0
+            right = len(v) - 1
+
+            while left < right:
+                mid = left + (right - left) // 2
+                if v[mid] <= curr:
+                    left = mid + 1
+                else:
+                    right = mid
+
+            return v[left] if v[left] > curr else -1
+
+        charMap = {}
+
+        for i in range(len(source)):
+            if source[i] not in charMap:
+                charMap[source[i]] = [i]
+            else:
+                charMap[source[i]].append(i)
+
+        if target[0] not in charMap:
+            return -1
+
+        ptr = charMap[target[0]][0]
+        dp = 1
+
+        for i in range(1, len(target)):
+            if target[i] not in charMap:
+                return -1
+
+            ptr = findNext(charMap[target[i]], ptr)
+
+            if ptr == -1:
+                dp += 1
+                ptr = charMap[target[i]][0]
+
+        return dp
