@@ -57,68 +57,69 @@ def preamble():
     pass
 
 
-def mycombinations(iterable, r):
-    """
-    This code works as a way to find all combinations of size "r" in an
-     iterable by utilizing a technique known as lexicographic ordering.
-    Here's an elaboration of why this code works:
-    1. The code starts by converting the iterable into a tuple called
-    "pool" and determining the length of the pool.
-    2. It checks if the desired combination size "r" is greater than the
-    length of the pool. If so, it immediately returns, as there are no
-    valid combinations to generate.
-    3. It creates a list called "indices" containing the initial indices
-    for the combination. These indices represent the positions of the
-    elements in the pool that will be selected for each combination.
-    4. It yields the first combination by selecting elements from the
-    pool based on the initial indices.
-    5. The code enters a loop that generates subsequent combinations:
-       a. It iterates in reverse order through the indices.
-       b. For each index, it checks if it can be incremented without
-       exceeding the boundaries of the pool or violating the combination
-       size.
-       c. If an index can be incremented, it updates it and adjusts the
-       following indices accordingly.
-       d. It yields the new combination by selecting elements from the
-       pool based on the updated indices.
-    6. The loop continues until all combinations have been
-    generated. The loop terminates when the indices cannot be further
-    incremented without violating the combination size or exceeding the
-    boundaries of the pool.
-    7. Once the loop ends, the function returns, indicating that all
-    combinations have been generated.
-    By systematically incrementing and adjusting the indices, the code
-    explores all possible combinations of elements from the given
-    iterable. The lexicographic ordering ensures that all combinations
-    are generated in a specific order, making it an efficient approach
-    to finding all combinations of size "r" in an iterable.
-    """
-    # combinations('ABCD', 2) --> AB AC AD BC BD CD
-    # combinations(range(4), 3) --> 012 013 023 123
-    pool = tuple(iterable)
-    n = len(pool)
-    if r > n:
-        return
-    indices = list(range(r))
-    yield tuple(pool[i] for i in indices)
-    while True:
-        for i in reversed(range(r)):
-            if indices[i] != i + n - r:
-                break
-        else:
+class SolutionH:
+    def combinations(self, iterable, r):
+        """
+        This code works as a way to find all combinations of size "r" in an
+        iterable by utilizing a technique known as lexicographic ordering.
+        Here's an elaboration of why this code works:
+        1. The code starts by converting the iterable into a tuple called
+        "pool" and determining the length of the pool.
+        2. It checks if the desired combination size "r" is greater than the
+        length of the pool. If so, it immediately returns, as there are no
+        valid combinations to generate.
+        3. It creates a list called "indices" containing the initial indices
+        for the combination. These indices represent the positions of the
+        elements in the pool that will be selected for each combination.
+        4. It yields the first combination by selecting elements from the
+        pool based on the initial indices.
+        5. The code enters a loop that generates subsequent combinations:
+        a. It iterates in reverse order through the indices.
+        b. For each index, it checks if it can be incremented without
+        exceeding the boundaries of the pool or violating the combination
+        size.
+        c. If an index can be incremented, it updates it and adjusts the
+        following indices accordingly.
+        d. It yields the new combination by selecting elements from the
+        pool based on the updated indices.
+        6. The loop continues until all combinations have been
+        generated. The loop terminates when the indices cannot be further
+        incremented without violating the combination size or exceeding the
+        boundaries of the pool.
+        7. Once the loop ends, the function returns, indicating that all
+        combinations have been generated.
+        By systematically incrementing and adjusting the indices, the code
+        explores all possible combinations of elements from the given
+        iterable. The lexicographic ordering ensures that all combinations
+        are generated in a specific order, making it an efficient approach
+        to finding all combinations of size "r" in an iterable.
+        """
+        # combinations('ABCD', 2) --> AB AC AD BC BD CD
+        # combinations(range(4), 3) --> 012 013 023 123
+        pool = tuple(iterable)
+        n = len(pool)
+        if r > n:
             return
-        indices[i] += 1
-        for j in range(i + 1, r):
-            indices[j] = indices[j - 1] + 1
-            yield tuple(pool[i] for i in indices)
+        indices = list(range(r))
+        yield tuple(pool[i] for i in indices)
+        while True:
+            for i in reversed(range(r)):
+                if indices[i] != i + n - r:
+                    break
+            else:
+                return
+            indices[i] += 1
+            for j in range(i + 1, r):
+                indices[j] = indices[j - 1] + 1
+                yield tuple(pool[i] for i in indices)
 
 
-print(list(mycombinations("ABCD", 2)))
+print(list(SolutionH().combinations("ABCD", 2)))
 
 from common import *
 
 
-class Solution:
+class SolutionF:
     def combine(self, n: int, k: int) -> List[List[int]]:
         def dfs(i, comb):
             nonlocal ans
@@ -137,7 +138,7 @@ class Solution:
         return ans
 
 
-class Solution:
+class SolutionE:
     def combine(self, n, k):
         @cache
         def dfs(_n, _k):
@@ -215,3 +216,75 @@ class SolutionD:
         res = []
         dfs(1, tuple())
         return [list(r) for r in res]
+
+
+class SolutionG:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+
+        # Check for invalid inputs
+        if k <= 0 or n < k:
+            return res
+
+        # Create an empty list to track the current combination
+        path = []
+
+        # Start the depth-first search (DFS) to generate combinations
+        self.dfs(n, k, 1, path, res)
+
+        return res
+
+    # Depth-first search (DFS) algorithm to generate combinations
+    def dfs(self, n, k, index, path, res):
+        # Termination condition: path length equals k
+        if len(path) == k:
+            res.append(path[:])  # Add a copy of the current combination to the result
+            return
+
+        # Loop through the possible values for the next position in the combination
+        # Note the difference in the loop condition compared to the Java code
+        # Here, i <= n - (k - len(path)) + 1
+        for i in range(index, n - (k - len(path)) + 2):
+            path.append(i)  # Add a number to the path
+
+            # Recursive call for the next position in the combination
+            self.dfs(n, k, i + 1, path, res)
+
+            # Backtracking step: Remove the last number added to the path
+            path.pop()
+
+
+class SolutionH:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+        path = []
+
+        def backtrack(n, k, StartIndex):
+            if len(path) == k:
+                res.append(path[:])
+                return
+            for i in range(StartIndex, n + 1):
+                path.append(i)
+                backtrack(n, k, i + 1)
+                path.pop()
+
+        backtrack(n, k, 1)
+        return res
+
+
+class SolutionI:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(i):
+            nonlocal ans, path
+            if len(path) == k:
+                ans.append(path.copy())
+                return
+            for i in range(i, n + 1):
+                path.append(i)
+                dfs(i + 1)
+                path.pop()
+
+        ans = []
+        path = []
+        dfs(1)
+        return ans
