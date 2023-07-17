@@ -115,31 +115,103 @@ def mycombinations(iterable, r):
 
 print(list(mycombinations("ABCD", 2)))
 
-
-import collections
-
-from itertools import islice
+from common import *
 
 
-def sliding_windowA(iterable, n):
-    # sliding_window('ABCDEFG', 4) --> ABCD BCDE CDEF DEFG
-    it = iter(iterable)
-    window = collections.deque(islice(it, n), maxlen=n)
-    if len(window) == n:
-        yield tuple(window)
-    for x in it:
-        window.append(x)
-        yield tuple(window)
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(i, comb):
+            nonlocal ans
+            if len(comb) == K:
+                ans.append(comb)
+                return
+            for j in range(i + 1, N):
+                dfs(j, comb + [A[j]])
+
+        N = n
+        K = k
+        A = range(1, n + 1)
+        ans = []
+        for i in range(n):
+            dfs(i, [A[i]])
+        return ans
 
 
-from itertools import islice
-from collections import deque
+class Solution:
+    def combine(self, n, k):
+        @cache
+        def dfs(_n, _k):
+            if _n == 0:
+                return -inf
+            if k == 0:
+                return 1
+
+            return dfs(_n, k - 1) + dfs(_n - 1, k)
+
+        return dfs(n, k)
 
 
-def sliding_window(iterable, n):
-    it = iter(iterable)
-    window = deque(islice(it, n), maxlen=n)
+class SolutionA:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        @cache
+        def dfs(_n, _k):
+            if _n == 0:
+                return []
+            if _k == 0:
+                return [[]]
+            return [d + [_n] for d in dfs(_n, _k - 1) if _n not in d] + dfs(_n - 1, _k)
 
-    while len(window) == n:
-        yield tuple(window)
-        window.append(next(it))
+        return dfs(n, k)
+
+
+class SolutionB:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        dp = [[[] for _ in range(k + 1)] for _ in range(n + 1)]
+        for i in range(k + 1):
+            dp[0][i] = []
+        for i in range(n + 1):
+            dp[i][0] = [[]]
+
+        for _n in range(1, n + 1):
+            for _k in range(1, k + 1):
+                dp[_n][_k] = [d + [_n] for d in dp[_n][_k - 1] if _n not in d] + dp[
+                    _n - 1
+                ][_k]
+        return dp[-1][-1]
+
+
+class SolutionC:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+        if k <= 0 or n < k:
+            return res
+
+        path = []
+        self.dfs(n, k, 1, path, res)
+
+        return res
+
+    def dfs(self, n, k, begin, path, res):
+        if len(path) == k:
+            res.append(path[:])  # Add a copy of the current combination to the result
+            return
+
+        for i in range(begin, n + 1):
+            path.append(i)  # Add a number to the path
+            self.dfs(n, k, i + 1, path, res)  # Recursive call
+            path.pop()  # Remove the last number added to the path (backtracking step)
+
+
+class SolutionD:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        @cache
+        def dfs(start, path):
+            if len(path) == k:
+                res.append(path)
+                return
+            for i in range(start, n + 1):
+                dfs(i + 1, path + (i,))
+
+        res = []
+        dfs(1, tuple())
+        return [list(r) for r in res]
