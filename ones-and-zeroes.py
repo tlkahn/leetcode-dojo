@@ -24,35 +24,3 @@ class SolutionA:
                         )
 
         return dp[len(strs)][m][n]
-
-
-class SolutionB:
-    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
-        N = len(strs)
-        ans = 0
-
-        def digits(s: str) -> tuple[int, int]:
-            if not s:
-                return 0, 0
-
-            ones = sum(1 for es in list(s) if es == "1")
-            zeros = len(s) - ones
-            return (ones, zeros)
-
-        @cache
-        def dfs(i):
-            nonlocal m, n, strs, ans
-            if not i:
-                return 0, 0
-            s = strs[i]
-            ones, zeros = digits(s)
-            d = dfs(i - 1)
-            new_ones = d[0] + ones
-            new_zeros = d[1] + zeros
-            if new_ones <= n and new_zeros <= m:
-                ans += 1
-                return new_ones, new_zeros
-            return ones, zeros
-
-        dfs(N - 1)
-        return ans
