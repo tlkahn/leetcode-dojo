@@ -92,3 +92,25 @@ class SolutionC:
             min_cost, second_min_cost = new_min_cost, new_second_min_cost
 
         return min_cost
+
+
+class SolutionD:
+    def rob(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+
+        def _rob(_nums):
+            @cache
+            def dfs(cur):
+                nonlocal _nums
+                if cur == -1:
+                    return 0
+                if cur == 0:
+                    return _nums[0]
+                return max(dfs(cur - 1), _nums[cur] + dfs(cur - 2))
+
+            return dfs(len(_nums) - 1)
+
+        return max(_rob(nums[1:]), _rob(nums[:-1]))
