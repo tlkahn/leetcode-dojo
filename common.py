@@ -1,4 +1,5 @@
 from typing import List, Optional, Dict
+from collections.abc import Callable
 from math import log
 from bisect import *
 from functools import cache, lru_cache
