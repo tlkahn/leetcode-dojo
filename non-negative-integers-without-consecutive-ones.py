@@ -1,7 +1,7 @@
 from common import *
 
 
-class Solution:
+class SolutionA:
     N = 50
 
     f = [[0] * 2 for _ in range(N)]
