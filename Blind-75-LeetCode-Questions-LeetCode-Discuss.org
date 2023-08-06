@@ -1,0 +1,160 @@
+* Blind 75 Leetcode problems
+** Array
+:PROPERTIES:
+:CUSTOM_ID: array
+:END:
+- [[https://leetcode.cn/problems/two-sum/][Two Sum]]
+- [[https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/][Best Time to Buy and Sell Stock]]
+- [[https://leetcode.cn/problems/contains-duplicate/][Contains Duplicate]]
+- [[https://leetcode.cn/problems/product-of-array-except-self/][Product of Array Except Self]]
+- [[https://leetcode.cn/problems/maximum-subarray/][Maximum Subarray]]
+- [[https://leetcode.cn/problems/maximum-product-subarray/][Maximum Product Subarray]]
+- [[https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/][Find Minimum in Rotated Sorted Array]]
+- [[https://leetcode.cn/problems/search-in-rotated-sorted-array/][Search in Rotated Sorted Array]]
+- [[https://leetcode.cn/problems/3sum/][3 Sum]]
+- [[https://leetcode.cn/problems/container-with-most-water/][Container With Most Water]]
+
+--------------
+
+** Binary
+:PROPERTIES:
+:CUSTOM_ID: binary
+:END:
+- [[https://leetcode.cn/problems/sum-of-two-integers/][Sum of Two Integers]]
+- [[https://leetcode.cn/problems/number-of-1-bits/][Number of 1 Bits]]
+- [[https://leetcode.cn/problems/counting-bits/][Counting Bits]]
+- [[https://leetcode.cn/problems/missing-number/][Missing Number]]
+- [[https://leetcode.cn/problems/reverse-bits/][Reverse Bits]]
+
+--------------
+
+** Dynamic Programming
+:PROPERTIES:
+:CUSTOM_ID: dynamic-programming
+:END:
+- [[https://leetcode.cn/problems/climbing-stairs/][Climbing Stairs]]
+- [[https://leetcode.cn/problems/coin-change/][Coin Change]]
+- [[https://leetcode.cn/problems/longest-increasing-subsequence/][Longest Increasing Subsequence]]
+- [[https://leetcode.cn/problems/longest-common-subsequence/][Longest Common Subsequence]]
+- [[https://leetcode.cn/problems/word-break/][Word Break Problem]]
+- [[https://leetcode.cn/problems/combination-sum-iv/][Combination Sum]]
+- [[https://leetcode.cn/problems/house-robber/][House Robber]]
+- [[https://leetcode.cn/problems/house-robber-ii/][House Robber II]]
+- [[https://leetcode.cn/problems/decode-ways/][Decode Ways]]
+- [[https://leetcode.cn/problems/unique-paths/][Unique Paths]]
+- [[https://leetcode.cn/problems/jump-game/][Jump Game]]
+
+--------------
+
+** Graph
+:PROPERTIES:
+:CUSTOM_ID: graph
+:END:
+- [[https://leetcode.cn/problems/clone-graph/][Clone Graph]]
+- [[https://leetcode.cn/problems/course-schedule/][Course Schedule]]
+- [[https://leetcode.cn/problems/pacific-atlantic-water-flow/][Pacific Atlantic Water Flow]]
+- [[https://leetcode.cn/problems/number-of-islands/][Number of Islands]]
+- [[https://leetcode.cn/problems/longest-consecutive-sequence/][Longest Consecutive Sequence]]
+- [[https://leetcode.cn/problems/alien-dictionary/][Alien Dictionary (Leetcode Premium)]]
+- [[https://leetcode.cn/problems/graph-valid-tree/][Graph Valid Tree (Leetcode Premium)]]
+- [[https://leetcode.cn/problems/number-of-connected-components-in-an-undirected-graph/][Number of Connected Components in an Undirected Graph (Leetcode Premium)]]
+
+--------------
+
+** Interval
+:PROPERTIES:
+:CUSTOM_ID: interval
+:END:
+- [[https://leetcode.cn/problems/insert-interval/][Insert Interval]]
+- [[https://leetcode.cn/problems/merge-intervals/][Merge Intervals]]
+- [[https://leetcode.cn/problems/non-overlapping-intervals/][Non-overlapping Intervals]]
+- [[https://leetcode.cn/problems/meeting-rooms/][Meeting Rooms (Leetcode Premium)]]
+- [[https://leetcode.cn/problems/meeting-rooms-ii/][Meeting Rooms II (Leetcode Premium)]]
+
+--------------
+
+** Linked List
+:PROPERTIES:
+:CUSTOM_ID: linked-list
+:END:
+- [[https://leetcode.cn/problems/reverse-linked-list/][Reverse a Linked List]]
+- [[https://leetcode.cn/problems/linked-list-cycle/][Detect Cycle in a Linked List]]
+- [[https://leetcode.cn/problems/merge-two-sorted-lists/][Merge Two Sorted Lists]]
+- [[https://leetcode.cn/problems/merge-k-sorted-lists/][Merge K Sorted Lists]]
+- [[https://leetcode.cn/problems/remove-nth-node-from-end-of-list/][Remove Nth Node From End Of List]]
+- [[https://leetcode.cn/problems/reorder-list/][Reorder List]]
+
+--------------
+
+** Matrix
+:PROPERTIES:
+:CUSTOM_ID: matrix
+:END:
+- [[https://leetcode.cn/problems/set-matrix-zeroes/][Set Matrix Zeroes]]
+- [[https://leetcode.cn/problems/spiral-matrix/][Spiral Matrix]]
+- [[https://leetcode.cn/problems/rotate-image/][Rotate Image]]
+- [[https://leetcode.cn/problems/word-search/][Word Search]]
+
+--------------
+
+** String
+:PROPERTIES:
+:CUSTOM_ID: string
+:END:
+- [[https://leetcode.cn/problems/longest-substring-without-repeating-characters/][Longest Substring Without Repeating Characters]]
+- [[https://leetcode.cn/problems/longest-repeating-character-replacement/][Longest Repeating Character Replacement]]
+- [[https://leetcode.cn/problems/minimum-window-substring/][Minimum Window Substring]]
+- [[https://leetcode.cn/problems/valid-anagram/][Valid Anagram]]
+- [[https://leetcode.cn/problems/group-anagrams/][Group Anagrams]]
+- [[https://leetcode.cn/problems/valid-parentheses/][Valid Parentheses]]
+- [[https://leetcode.cn/problems/valid-palindrome/][Valid Palindrome]]
+- [[https://leetcode.cn/problems/longest-palindromic-substring/][Longest Palindromic Substring]]
+- [[https://leetcode.cn/problems/palindromic-substrings/][Palindromic Substrings]]
+- [[https://leetcode.cn/problems/encode-and-decode-strings/][Encode and Decode Strings (Leetcode Premium)]]
+
+--------------
+
+** Tree
+:PROPERTIES:
+:CUSTOM_ID: tree
+:END:
+- [[https://leetcode.cn/problems/maximum-depth-of-binary-tree/][Maximum Depth of Binary Tree]]
+- [[https://leetcode.cn/problems/same-tree/][Same Tree]]
+- [[https://leetcode.cn/problems/invert-binary-tree/][Invert/Flip Binary Tree]]
+- [[https://leetcode.cn/problems/binary-tree-maximum-path-sum/][Binary Tree Maximum Path Sum]]
+- [[https://leetcode.cn/problems/binary-tree-level-order-traversal/][Binary Tree Level Order Traversal]]
+- [[https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/][Serialize and Deserialize Binary Tree]]
+- [[https://leetcode.cn/problems/subtree-of-another-tree/][Subtree of Another Tree]]
+- [[https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/][Construct Binary Tree from Preorder and Inorder Traversal]]
+- [[https://leetcode.cn/problems/validate-binary-search-tree/][Validate Binary Search Tree]]
+- [[https://leetcode.cn/problems/kth-smallest-element-in-a-bst/][Kth Smallest Element in a BST]]
+- [[https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/][Lowest Common Ancestor of BST]]
+- [[https://leetcode.cn/problems/implement-trie-prefix-tree/][Implement Trie (Prefix Tree)]]
+- [[https://leetcode.cn/problems/add-and-search-word-data-structure-design/][Add and Search Word]]
+- [[https://leetcode.cn/problems/word-search-ii/][Word Search II]]
+
+--------------
+
+** Heap
+:PROPERTIES:
+:CUSTOM_ID: heap
+:END:
+- [[https://leetcode.cn/problems/merge-k-sorted-lists/][Merge K Sorted Lists]]
+- [[https://leetcode.cn/problems/top-k-frequent-elements/][Top K Frequent Elements]]
+- [[https://leetcode.cn/problems/find-median-from-data-stream/][Find Median from Data Stream]]
+
+--------------
+
+** Important Link:
+:PROPERTIES:
+:CUSTOM_ID: important-link
+:END:
+[[https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed][14 Patterns to Ace Any Coding Interview Question]]
+
+--------------
+
+If someone is interested to keep a track can copy this [[https://gist.github.com/krishnadey30/88c4e2f601e96597974c00185e479532][gist]].
+
+--------------
+
+https://leetcode.cn/discuss/general-discussion/460599/blind-75-leetcode-questions
