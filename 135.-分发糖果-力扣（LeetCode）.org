@@ -1,0 +1,69 @@
+There are =n= children standing in a line. Each child is assigned a rating value given in the integer array =ratings=.
+
+You are giving candies to these children subjected to the following requirements:
+
+- Each child must have at least one candy.
+- Children with a higher rating get more candies than their neighbors.
+
+Return /the minimum number of candies you need to have to distribute the candies to the children/.
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: ratings = [1,0,2]
+Output: 5
+Explanation: You can allocate to the first, second and third child with 2, 1, 2 candies respectively.
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: ratings = [1,2,2]
+Output: 4
+Explanation: You can allocate to the first, second and third child with 1, 2, 1 candies respectively.
+The third child gets 1 candy because it satisfies the above two conditions.
+#+end_example
+
+
+
+*Constraints:*
+
+- =n == ratings.length=
+- =1 <= n <= 2 * 10=^{=4=}
+- =0 <= ratings[i] <= 2 * 10=^{=4=}
+
+--------------
+
+https://leetcode.cn/problems/candy/description/?envType=study-plan-v2&envId=top-interview-150
+
+
+#+begin_src ruby
+def min_candies(ratings)
+  candies = Array.new(ratings.size, 1)
+
+  (1...ratings.size).each { |i| candies[i] = candies[i - 1] + 1 if ratings[i] > ratings[i - 1] }
+  (ratings.size - 2).downto(0).each { |i| candies[i] = [candies[i], candies[i + 1] + 1].max if ratings[i] > ratings[i + 1] }
+
+  candies.sum
+end
+
+min_candies([1,0,2])
+#+end_src
+
+#+begin_src ruby
+def min_candies(ratings)
+  candies = Array.new(ratings.size, 1)
+
+  (1...ratings.size).each do |i|
+    candies[i] = candies[i - 1] + 1 if ratings[i] > ratings[i - 1]
+  end
+
+  (ratings.size - 2).downto(0).each do |i|
+    candies[i] = [candies[i], candies[i + 1] + 1].max if ratings[i] > ratings[i + 1]
+  end
+
+  candies.sum
+end
+#+end_src

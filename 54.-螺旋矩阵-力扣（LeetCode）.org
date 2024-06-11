@@ -1,0 +1,70 @@
+* [[https://leetcode.cn/problems/spiral-matrix/][54. Spiral Matrix]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/f85964cb-1991-44bf-8722-613b4ade4b5b.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/1e4ec384-e971-4ed9-a6c0-19a04bc5ce3e.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/fa32903f-18cf-4911-a508-c348a076154d.svg]]
+
+提示
+
+[[/Users/toeinriver/Documents/org/web/WebImg/44751e43-16ff-4fae-bb5e-660b7fc68ec2.svg]]
+
+Given an =m x n= =matrix=, return /all elements of the/ =matrix= /in spiral order/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2020/11/13/spiral1.jpg]]
+
+#+begin_example
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+#+end_example
+
+*Example 2:*
+
+[[https://assets.leetcode.com/uploads/2020/11/13/spiral.jpg]]
+
+#+begin_example
+Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+#+end_example
+
+
+
+*Constraints:*
+
+- =m == matrix.length=
+- =n == matrix[i].length=
+- =1 <= m, n <= 10=
+- =-100 <= matrix[i][j] <= 100=
+
+#+begin_src ruby
+# @param {Integer[][]} matrix
+# @return {Integer[]}
+def spiral_order(matrix)
+  result = []
+  while matrix.any?
+    result += matrix.shift
+    matrix = matrix.transpose.reverse
+  end
+  result
+end
+#+end_src
+
+The solution implements a function called spiral_order, which takes a matrix as its input. It initializes an empty result array. Then, it iterates through the matrix in a spiral manner by performing the following steps repeatedly until the matrix is empty:
+
+1. Append the first row of the matrix to the result array and remove it from the matrix.
+2. Rotate the matrix 90 degrees counterclockwise by transposing and then reversing its rows.
+
+The function returns the result array containing the matrix elements in spiral order.
+
+--------------
+
+https://leetcode.cn/problems/spiral-matrix/?envType=study-plan-v2&envId=top-interview-150

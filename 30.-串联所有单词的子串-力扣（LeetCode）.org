@@ -1,0 +1,119 @@
+* [[https://leetcode.cn/problems/substring-with-concatenation-of-all-words/][30. Substring with Concatenation of All Words]]
+
+困难
+
+[[/Users/toeinriver/Documents/org/web/WebImg/ec899fbf-bde9-44a6-9657-f5f7703406ba.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/e0c0fd23-31aa-4a01-b5fa-e8864a4a3644.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/c9cdfc08-f909-4234-9606-97a262b86e42.svg]]
+
+You are given a string =s= and an array of strings =words=. All the strings of =words= are of *the same length*.
+
+A *concatenated string* is a string that exactly contains all the strings of any permutation of =words= concatenated.
+
+- For example, if =words = ["ab","cd","ef"]=, then ="abcdef"=, ="abefcd"=, ="cdabef"=, ="cdefab"=, ="efabcd"=, and ="efcdab"= are all concatenated strings. ="acdbef"= is not a concatenated string because it is not the concatenation of any permutation of =words=.
+
+Return an array of /the starting indices/ of all the concatenated substrings in =s=. You can return the answer in *any order*.
+
+
+
+*Example 1:*
+
+*Input:* s = "barfoothefoobarman", words = ["foo","bar"]
+
+*Output:* [0,9]
+
+*Explanation:*
+
+The substring starting at 0 is ="barfoo"=. It is the concatenation of =["bar","foo"]= which is a permutation of =words=.\\
+The substring starting at 9 is ="foobar"=. It is the concatenation of =["foo","bar"]= which is a permutation of =words=.
+
+*Example 2:*
+
+*Input:* s = "wordgoodgoodgoodbestword", words = ["word","good","best","word"]
+
+*Output:* []
+
+*Explanation:*
+
+There is no concatenated substring.
+
+*Example 3:*
+
+*Input:* s = "barfoofoobarthefoobarman", words = ["bar","foo","the"]
+
+*Output:* [6,9,12]
+
+*Explanation:*
+
+The substring starting at 6 is ="foobarthe"=. It is the concatenation of =["foo","bar","the"]=.\\
+The substring starting at 9 is ="barthefoo"=. It is the concatenation of =["bar","the","foo"]=.\\
+The substring starting at 12 is ="thefoobar"=. It is the concatenation of =["the","foo","bar"]=.
+
+
+
+*Constraints:*
+
+- =1 <= s.length <= 10=^{=4=}
+- =1 <= words.length <= 5000=
+- =1 <= words[i].length <= 30=
+- =s= and =words[i]= consist of lowercase English letters.
+
+  #+begin_src ruby
+def find_substring(s, words)
+  word_len = words[0].length
+  words_count = words.length
+  substring_len = word_len * words_count
+  s_len = s.length
+  count_map = words.group_by(&:itself).transform_values(&:count)
+  result = []
+
+  (0..s_len - substring_len).each do |i|
+    substring_map = s[i, substring_len].scan(/.{#{word_len}}/).group_by(&:itself).transform_values(&:count)
+    result << i if substring_map == count_map
+  end
+
+  result
+end
+  #+end_src
+
+#+begin_src ruby
+def find_substring(s, words)
+  return [] if words.empty?
+
+  word_len = words[0].length
+  words_count = words.length
+  total_len = word_len * words_count
+  s_len = s.length
+  count_map = words.group_by(&:itself).transform_values(&:count)
+  result = []
+
+  (0...word_len).each do |offset|
+    left = right = offset
+    window = Hash.new(0)
+
+    while right + word_len <= s_len
+      w1 = s[right, word_len]
+      right += word_len
+      window[w1] += 1
+
+      while window[w1] > count_map[w1].to_i
+        w2 = s[left, word_len]
+        left += word_len
+        window[w2] -= 1
+      end
+
+      result << left if right - left == total_len
+    end
+  end
+
+  result
+end
+#+end_src
+
+--------------
+
+https://leetcode.cn/problems/substring-with-concatenation-of-all-words/description/?envType=study-plan-v2&envId=top-interview-150

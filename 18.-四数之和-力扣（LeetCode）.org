@@ -1,0 +1,85 @@
+Given an array =nums= of =n= integers, return /an array of all the *unique* quadruplets/ =[nums[a], nums[b], nums[c], nums[d]]= such that:
+
+- =0 <= a, b, c, d < n=
+- =a=, =b=, =c=, and =d= are *distinct*.
+- =nums[a] + nums[b] + nums[c] + nums[d] == target=
+
+You may return the answer in *any order*.
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: nums = [1,0,-1,0,-2,2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: nums = [2,2,2,2,2], target = 8
+Output: [[2,2,2,2]]
+#+end_example
+
+--------------
+
+https://leetcode.cn/problems/4sum/description/
+
+#+begin_src ruby
+def four_sum(nums, target)
+  nums.sort!
+  result = []
+  n = nums.size
+
+  (0..n-4).each do |a|
+    next if a > 0 && nums[a] == nums[a - 1]
+
+    (a+1..n-3).each do |b|
+      next if b > a+1 && nums[b] == nums[b - 1]
+
+      c, d = b + 1, n - 1
+
+      while c < d
+        sum = nums[a] + nums[b] + nums[c] + nums[d]
+
+        if sum == target
+          result << [nums[a], nums[b], nums[c], nums[d]]
+          c += 1
+          d -= 1
+          c += 1 while nums[c] == nums[c - 1] && c < d
+          d -= 1 while nums[d] == nums[d + 1] && c < d
+        elsif sum < target
+          c += 1
+        else
+          d -= 1
+        end
+      end
+    end
+  end
+
+  result
+end
+
+#+end_src
+
+This =four_sum= function takes an array of integers =nums= and an integer =target= as its input and returns an array of all unique quadruplets (four elements) that sum up to the target value.
+
+1. =nums.sort!=: Sorts the input array in ascending order in-place.
+
+2. =result = []=: Initializes an empty array to store the resulting quadruplets.
+
+3. =n = nums.size=: Stores the size of the input array in =n=.
+
+4. Two nested loops iterate over all pairs of distinct elements in the sorted array (indices =a= and =b=). The loops are optimized to prevent unnecessary iterations by using the conditions =a > 0 && nums[a] == nums[a - 1]= and =b > a + 1 && nums[b] == nums[b - 1]=, which skip over duplicate values.
+
+5. =c, d = b + 1, n - 1=: Initialize pointers =c= and =d= to the next index after =b= and the last index of the array, respectively.
+
+6. The =while c < d= loop iterates until =c= and =d= meet. Inside the loop:
+
+   - Calculate =sum=, the current sum of the four elements at indices =a=, =b=, =c=, and =d=.
+   - If =sum= equals the target, add the quadruplet to the result array, then increment =c= and decrement =d=. Use two =while= loops to skip over duplicate values for =c= and =d=.
+   - If =sum= is less than the target, increment =c= to move towards a larger sum.
+   - If =sum= is greater than the target, decrement =d= to move towards a smaller sum.
+
+7. After the loops, the function returns the =result= array containing all unique quadruplets that sum up to the target value.
