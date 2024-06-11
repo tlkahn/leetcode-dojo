@@ -1,0 +1,57 @@
+The *n-queens* puzzle is the problem of placing =n= queens on an =n x n= chessboard such that no two queens attack each other.
+
+Given an integer =n=, return /the number of distinct solutions to the *n-queens puzzle*/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2020/11/13/queens.jpg]]
+
+#+begin_example
+Input: n = 4
+Output: 2
+Explanation: There are two distinct solutions to the 4-queens puzzle as shown.
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: n = 1
+Output: 1
+#+end_example
+
+*Constraints:*
+
+- =1 <= n <= 9
+
+  #+begin_src ruby
+def total_n_queens(n)
+  def is_valid(queens, row, col)
+    queens.each_with_index do |q_col, q_row|
+      return false if q_col == col || (q_row - row).abs == (q_col - col).abs
+    end
+    true
+  end
+
+  def backtrack(queens, row)
+    return 1 if row == @n
+
+    count = 0
+    (0...@n).each do |col|
+      next unless is_valid(queens, row, col)
+
+      queens.push(col)
+      count += backtrack(queens, row + 1)
+      queens.pop
+    end
+    count
+  end
+
+  @n = n
+  backtrack([], 0)
+end
+  #+end_src
+--------------
+
+https://leetcode.cn/problems/n-queens-ii/description/?envType=study-plan-v2&envId=top-interview-150
