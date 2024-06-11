@@ -1,0 +1,87 @@
+[[https://leetcode.cn/problems/divide-two-integers/][29. Divide Two Integers]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/705bafb2-a32a-4dc4-a9b1-c704d6cbc2e2.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/ae01726b-dba7-4e29-9792-4cf9741b45d3.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/da523845-d137-41ab-af38-01762c16d2a5.svg]]
+
+Given two integers =dividend= and =divisor=, divide two integers *without* using multiplication, division, and mod operator.
+
+The integer division should truncate toward zero, which means losing its fractional part. For example, =8.345= would be truncated to =8=, and =-2.7335= would be truncated to =-2=.
+
+Return /the *quotient* after dividing/ =dividend= /by/ =divisor=.
+
+*Note:* Assume we are dealing with an environment that could only store integers within the *32-bit* signed integer range: =[−2=^{=31=}=, 2=^{=31=}= − 1]=. For this problem, if the quotient is *strictly greater than* =2=^{=31=}= - 1=, then return =2=^{=31=}= - 1=, and if the quotient is *strictly less than* =-2=^{=31=}, then return =-2=^{=31=}.
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: dividend = 10, divisor = 3
+Output: 3
+Explanation: 10/3 = 3.33333.. which is truncated to 3.
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: dividend = 7, divisor = -3
+Output: -2
+Explanation: 7/-3 = -2.33333.. which is truncated to -2.
+#+end_example
+
+
+
+*Constraints:*
+
+- =-2=^{=31=}= <= dividend, divisor <= 2=^{=31=}= - 1=
+- =divisor != 0=
+
+--------------
+
+https://leetcode.cn/problems/divide-two-integers/
+
+#+begin_src ruby
+def divide(dividend, divisor)
+  max_int = 2**31 - 1
+  min_int = -2**31
+
+  sign = (dividend < 0) == (divisor < 0) ? 1 : -1
+  dividend, divisor = dividend.abs, divisor.abs
+  quotient = 0
+
+  while dividend >= divisor
+    shift = 0
+    while dividend >= (divisor << shift)
+      shift += 1
+    end
+
+    dividend -= divisor << (shift - 1)
+    quotient += 1 << (shift - 1)
+  end
+
+  result = sign * quotient
+  result.clamp(min_int, max_int)
+end
+
+#+end_src
+
+This implementation of integer division works by using bit manipulation and subtraction instead of multiplication, division, or mod operators. Here's a breakdown of the solution:
+
+1. =max_int= and =min_int= are set to the 32-bit signed integer range limits.
+2. The =sign= is calculated to determine if the result will be positive or negative.
+3. The absolute values of =dividend= and =divisor= are used to simplify the calculation.
+4. =quotient= is initialized to 0.
+5. The outer loop runs while =dividend= is greater than or equal to =divisor=.
+6. The inner loop calculates the number of left shifts required to make the =divisor= as close as possible to the =dividend= without going over it.
+7. After finding the appropriate left shift, subtract the shifted =divisor= from the =dividend=.
+8. Add the shifted 1 (representing the power of two) to the =quotient=.
+9. After the outer loop finishes, the final result is the product of the =quotient= and the =sign=. It is then clamped to the 32-bit signed integer range.
+
+The algorithm effectively performs repeated subtractions while leveraging bit manipulation to speed up the process. It stops when the =dividend= becomes less than the =divisor=, and the =quotient= contains the result of the division, truncated towards zero.

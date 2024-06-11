@@ -1,0 +1,71 @@
+* [[https://leetcode.cn/problems/remove-nth-node-from-end-of-list/][19. Remove Nth Node From End of List]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/d082f107-abf8-45e7-8e86-2a17f3c204f0.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/8153141d-ab35-49f1-a67b-6d05634b4112.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/9ef737bd-95fc-421e-981b-591c655b72bf.svg]]
+
+提示
+
+[[/Users/toeinriver/Documents/org/web/WebImg/692de301-7dbb-4318-9f33-069364a4d6f6.svg]]
+
+Given the =head= of a linked list, remove the =n=^{=th=} node from the end of the list and return its head.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2020/10/03/remove_ex1.jpg]]
+
+#+begin_example
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: head = [1], n = 1
+Output: []
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: head = [1,2], n = 1
+Output: [1]
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the list is =sz=.
+- =1 <= sz <= 30=
+- =0 <= Node.val <= 100=
+- =1 <= n <= sz=
+
+--------------
+
+https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
+#+begin_src ruby
+def remove_nth_from_end(head, n)
+  dummy = ListNode.new(0, head)
+  first = second = dummy
+
+  (0..n).each { |_| first = first.next }
+
+  while first
+    first = first.next
+    second = second.next
+  end
+
+  second.next = second.next.next
+  dummy.next
+end
+#+end_src
