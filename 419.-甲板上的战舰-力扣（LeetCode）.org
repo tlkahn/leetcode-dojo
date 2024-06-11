@@ -1,0 +1,54 @@
+[[https://leetcode.cn/problems/battleships-in-a-board/][419. Battleships in a Board]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/efa8c092-4ec4-43d7-8cd7-507c7cc3a0e7.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/ed228085-256d-4680-a170-aaf6e6b16578.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/6d68ac43-0855-4101-b56f-967a096dc6e1.svg]]
+
+Given an =m x n= matrix =board= where each cell is a battleship ='X'= or empty ='.'=, return /the number of the *battleships* on/ =board=.
+
+*Battleships* can only be placed horizontally or vertically on =board=. In other words, they can only be made of the shape =1 x k= (=1= row, =k= columns) or =k x 1= (=k= rows, =1= column), where =k= can be of any size. At least one horizontal or vertical cell separates between two battleships (i.e., there are no adjacent battleships).
+
+Solution:
+
+#+begin_src ruby
+def count_battleships(board)
+  count = 0
+
+  (0...board.size).each do |row|
+    (0...board[row].size).each do |col|
+      if board[row][col] == 'X'
+        count += 1
+        dfs(board, row, col)
+      end
+    end
+  end
+
+  count
+end
+
+def dfs(board, row, col)
+  return if row < 0 || row >= board.size || col < 0 || col >= board[row].size || board[row][col] != 'X'
+
+  board[row][col] = 'V'
+  directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+
+  directions.each do |direction|
+    next_row, next_col = row + direction[0], col + direction[1]
+    dfs(board, next_row, next_col)
+  end
+end
+#+end_src
+
+The time complexity of the algorithm is O(m * n), where m is the number of rows and n is the number of columns in the grid. This is because each cell in the grid is visited once during the iteration and the DFS traversal.
+
+The space complexity is O(m * n), which is the maximum depth of recursion in the worst case (e.g., when all cells are 'X'). This represents the maximum size of the function call stack due to the recursive DFS.
+
+--------------
+
+https://leetcode.cn/problems/battleships-in-a-board/description/

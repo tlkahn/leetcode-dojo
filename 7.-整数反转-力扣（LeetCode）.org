@@ -1,0 +1,77 @@
+* [[https://leetcode.cn/problems/reverse-integer/][7. Reverse Integer]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/e8366d38-332a-4097-849f-f879a9d198a7.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/bb46d6d9-b77e-4a29-a7a0-5369f3a44782.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/b1c4b6ca-3fc5-4193-8ce0-6107812448e7.svg]]
+
+Given a signed 32-bit integer =x=, return =x= /with its digits reversed/. If reversing =x= causes the value to go outside the signed 32-bit integer range =[-2=^{=31=}=, 2=^{=31=}= - 1]=, then return =0=.
+
+*Assume the environment does not allow you to store 64-bit integers (signed or unsigned).*
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: x = 123
+Output: 321
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: x = -123
+Output: -321
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: x = 120
+Output: 21
+#+end_example
+
+
+
+*Constraints:*
+
+- =-2=^{=31=}= <= x <= 2=^{=31=}= - 1=
+
+--------------
+
+https://leetcode.cn/problems/reverse-integer/description/
+
+#+begin_src ruby
+def reverse(x)
+x = -123
+  reversed = x.to_s.reverse.to_i
+  reversed = -reversed if x < 0
+  return 0 if reversed < -2**31 || reversed > 2**31 - 1
+  reversed
+end
+#+end_src
+
+
+#+begin_src ruby
+def reverse(x)
+  reversed = 0
+  is_negative = x < 0
+  x = x.abs
+
+  while x != 0
+    digit = x % 10
+    x /= 10
+
+    return 0 if reversed > (2**31 / 10) || (reversed == (2**31 / 10) && digit > 7)
+    reversed = reversed * 10 + digit
+  end
+
+  is_negative ? -reversed : reversed
+end
+#+end_src

@@ -1,0 +1,94 @@
+* [[https://leetcode.cn/problems/regular-expression-matching/][10. Regular Expression Matching]]
+
+困难
+
+[[/Users/toeinriver/Documents/org/web/WebImg/7d843856-ed4a-46a2-97ea-66c7bae670b2.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/949c4d5f-c7db-4bc3-9d55-8a3439a9cdb3.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/d4dedb31-9e13-4b0f-9d43-8a8b5c1bd2a5.svg]]
+
+Given an input string =s= and a pattern =p=, implement regular expression matching with support for ='.'= and ='*'= where:
+
+- ='.'= Matches any single character.
+- ='*'= Matches zero or more of the preceding element.
+
+The matching should cover the *entire* input string (not partial).
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: s = "aa", p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: s = "aa", p = "a*"
+Output: true
+Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: s = "ab", p = ".*"
+Output: true
+Explanation: ".*" means "zero or more (*) of any character (.)".
+#+end_example
+
+
+
+*Constraints:*
+
+- =1 <= s.length <= 20=
+- =1 <= p.length <= 20=
+- =s= contains only lowercase English letters.
+- =p= contains only lowercase English letters, ='.'=, and ='*'=.
+- It is guaranteed for each appearance of the character ='*'=, there will be a previous valid character to match.
+
+--------------
+
+https://leetcode.cn/problems/regular-expression-matching/description/
+
+
+#+begin_src ruby
+def is_match(s, p)
+  dp = Array.new(s.length + 1) { Array.new(p.length + 1, false) }
+  dp[0][0] = true
+
+  (1..p.length).each do |j|
+    dp[0][j] = dp[0][j - 2] if p[j - 1] == '*'
+  end
+
+  (1..s.length).each do |i|
+    (1..p.length).each do |j|
+      if p[j - 1] == s[i - 1] || p[j - 1] == '.'
+        dp[i][j] = dp[i - 1][j - 1]
+      elsif p[j - 1] == '*'
+        dp[i][j] = dp[i][j - 2] || (dp[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'))
+      end
+    end
+  end
+
+  dp[s.length][p.length]
+end
+#+end_src
+
+The given solution employs Dynamic Programming to solve the problem. Let's denote =dp[i][j]= as a boolean value that represents whether the first =i= characters of the string =s= match the first =j= characters of the pattern =p=. We want to compute =dp[s.length][p.length]= to determine if the entire string =s= matches the pattern =p=.
+
+1. Initialize =dp[0][0]= to =true= as an empty string matches an empty pattern.
+2. Populate the first row of the =dp= matrix for cases where =p[j-1] == '*'= since they depend on the preceding elements in the pattern.
+3. Iterate over the =dp= matrix from =dp[1][1]= to =dp[s.length][p.length]=:
+   - If =p[j - 1]= is equal to the current character in =s= or a '.', set =dp[i][j]= to the value of =dp[i - 1][j - 1]= (diagonal element).
+   - If =p[j - 1]= is equal to '*', there are two cases to consider:
+     1. The '*' acts as zero occurrences of the preceding element. Set =dp[i][j]= to the value of =dp[i][j - 2]=.
+     2. The '*' acts as one or more occurrences of the preceding element. Set =dp[i][j]= to the value of =dp[i - 1][j]= if either the preceding character in =p= matches the current character in =s= or the preceding character in =p= is a '.'.
+
+The final result, =dp[s.length][p.length]=, indicates whether the entire string =s= matches the pattern =p=.

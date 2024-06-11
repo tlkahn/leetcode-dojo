@@ -1,0 +1,74 @@
+* [[https://leetcode.cn/problems/generate-parentheses/][22. Generate Parentheses]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/df303994-f860-460a-94e9-e08b0743ce15.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/bbdbd231-7c71-44c2-be80-34d1aabf91a2.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/46bde485-86bd-4bae-8fc2-6e76846cad3e.svg]]
+
+Given =n= pairs of parentheses, write a function to /generate all combinations of well-formed parentheses/.
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: n = 1
+Output: ["()"]
+#+end_example
+
+
+
+*Constraints:*
+
+- =1 <= n <= 8=
+
+--------------
+
+https://leetcode.cn/problems/generate-parentheses/description/
+
+#+begin_src ruby
+def generate_parenthesis(n)
+  def backtrack(s, open, close, max, ans)
+    if s.length == max * 2
+      ans << s
+      return
+    end
+
+    backtrack(s + '(', open + 1, close, max, ans) if open < max
+    backtrack(s + ')', open, close + 1, max, ans) if close < open
+  end
+
+  ans = []
+  backtrack('', 0, 0, n, ans)
+  ans
+end
+#+end_src
+
+The solution is based on a recursive backtracking algorithm that generates all possible combinations of well-formed parentheses. The function =backtrack= takes 5 parameters:
+
+1. =s=: the current string of parentheses.
+2. =open=: the number of open parentheses used.
+3. =close=: the number of close parentheses used.
+4. =max=: the maximum number of open or close parentheses allowed (equals =n=).
+5. =ans=: an array to store the valid combinations.
+
+The base case is when the length of =s= equals =max * 2=, which indicates that a complete combination has been generated. In that case, =s= is added to =ans=.
+
+The function uses two conditional statements to ensure well-formed parentheses:
+
+1. If =open < max=, it means more open parentheses can be added. The function calls itself with an updated string =s= that includes an open parenthesis, and increments the =open= count.
+2. If =close < open=, it means there are still open parentheses that have not been closed. The function calls itself with an updated string =s= that includes a close parenthesis, and increments the =close= count.
+
+The recursion ends when the base case is reached for all combinations, and the =ans= array contains all well-formed parentheses combinations.

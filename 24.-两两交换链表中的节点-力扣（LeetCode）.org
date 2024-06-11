@@ -1,0 +1,78 @@
+* [[https://leetcode.cn/problems/swap-nodes-in-pairs/][24. Swap Nodes in Pairs]]
+
+中等
+
+[[/Users/toeinriver/Documents/org/web/WebImg/cbd3386f-6625-4be0-9da6-fdf729cb4737.svg]]
+
+相关标签
+
+[[/Users/toeinriver/Documents/org/web/WebImg/20f1ecd9-6b5d-40f6-819d-2efa9199ce48.svg]]相关企业
+
+[[/Users/toeinriver/Documents/org/web/WebImg/33319ee2-f341-4cb0-add0-711a0bc2ba51.svg]]
+
+Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+*Example 1:*
+
+[[/Users/toeinriver/Documents/WebImg/1d121fc2c3053fe837524cc4c66e687bc2fc75d86cbe6ad7364aa2828944a160.jpg]]
+
+#+begin_example
+Input: head = [1,2,3,4]
+Output: [2,1,4,3]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: head = []
+Output: []
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: head = [1]
+Output: [1]
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the list is in the range =[0, 100]=.
+- =0 <= Node.val <= 100=
+
+--------------
+
+https://leetcode.cn/problems/swap-nodes-in-pairs/
+
+#+begin_src ruby
+class ListNode
+  attr_accessor :val, :next
+  def initialize(val = 0, _next = nil)
+    @val = val
+    @next = _next
+  end
+end
+
+def swap_pairs(head)
+  return head if head.nil? || head.next.nil?
+
+  new_head = head.next
+  prev_node = nil
+
+  while head && head.next
+    first_node = head
+    second_node = head.next
+
+    first_node.next = second_node.next
+    second_node.next = first_node
+    prev_node.next = second_node unless prev_node.nil?
+
+    prev_node = first_node
+    head = first_node.next
+  end
+
+  new_head
+end
+#+end_src
