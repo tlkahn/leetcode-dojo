@@ -1,0 +1,69 @@
+A gene string can be represented by an 8-character long string, with choices from ='A'=, ='C'=, ='G'=, and ='T'=.
+
+Suppose we need to investigate a mutation from a gene string =startGene= to a gene string =endGene= where one mutation is defined as one single character changed in the gene string.
+
+- For example, ="AACCGGTT" --> "AACCGGTA"= is one mutation.
+
+There is also a gene bank =bank= that records all the valid gene mutations. A gene must be in =bank= to make it a valid gene string.
+
+Given the two gene strings =startGene= and =endGene= and the gene bank =bank=, return /the minimum number of mutations needed to mutate from/ =startGene= /to/ =endGene=. If there is no such a mutation, return =-1=.
+
+Note that the starting point is assumed to be valid, so it might not be included in the bank.
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: startGene = "AACCGGTT", endGene = "AACCGGTA", bank = ["AACCGGTA"]
+Output: 1
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: startGene = "AACCGGTT", endGene = "AAACGGTA", bank = ["AACCGGTA","AACCGCTA","AAACGGTA"]
+Output: 2
+#+end_example
+
+
+
+*Constraints:*
+
+- =0 <= bank.length <= 10=
+- =startGene.length == endGene.length == bank[i].length == 8=
+- =startGene=, =endGene=, and =bank[i]= consist of only the characters =['A', 'C', 'G', 'T']=.
+
+--------------
+
+#+begin_src ruby
+def min_mutations(start_gene, end_gene, bank)
+  return -1 if !bank.include?(end_gene)
+
+  queue = [[start_gene, 0]]
+  visited = {start_gene => true}
+
+  while !queue.empty?
+    gene, mutations = queue.shift
+    return mutations if gene == end_gene
+
+    bank.each do |next_gene|
+      if !visited[next_gene] && valid_mutation?(gene, next_gene)
+        queue.push([next_gene, mutations + 1])
+        visited[next_gene] = true
+      end
+    end
+  end
+
+  -1
+end
+
+def valid_mutation?(gene1, gene2)
+  diff = 0
+  (0...gene1.length).each { |i| diff += 1 if gene1[i] != gene2[i] }
+  diff == 1
+end
+
+#+end_src
+
+https://leetcode.cn/problems/minimum-genetic-mutation/description/?envType=study-plan-v2&envId=top-interview-150

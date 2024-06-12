@@ -1,0 +1,86 @@
+A *transformation sequence* from word =beginWord= to word =endWord= using a dictionary =wordList= is a sequence of words =beginWord -> s=_{=1=}= -> s=_{=2=}= -> ... -> s=_{=k=} such that:
+
+- Every adjacent pair of words differs by a single letter.
+- Every =s=_{=i=} for =1 <= i <= k= is in =wordList=. Note that =beginWord= does not need to be in =wordList=.
+- =s=_{=k=}= == endWord=
+
+Given two words, =beginWord= and =endWord=, and a dictionary =wordList=, return /the *number of words* in the *shortest transformation sequence* from/ =beginWord= /to/ =endWord=/, or/ =0= /if no such sequence exists./
+
+
+
+*Example 1:*
+
+#+begin_example
+Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+Output: 5
+Explanation: One shortest transformation sequence is "hit" -> "hot" -> "dot" -> "dog" -> cog", which is 5 words long.
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]
+Output: 0
+Explanation: The endWord "cog" is not in wordList, therefore there is no valid transformation sequence.
+#+end_example
+
+
+
+*Constraints:*
+
+- =1 <= beginWord.length <= 10=
+- =endWord.length == beginWord.length=
+- =1 <= wordList.length <= 5000=
+- =wordList[i].length == beginWord.length=
+- =beginWord=, =endWord=, and =wordList[i]= consist of lowercase English letters.
+- =beginWord != endWord=
+- All the words in =wordList= are *unique*.
+
+--------------
+#+begin_src ruby
+def ladder_length(begin_word, end_word, word_list)
+  word_set = Set.new(word_list)
+  return 0 unless word_set.include?(end_word)
+
+  queue = [[begin_word, 1]]
+  while !queue.empty?
+    word, length = queue.shift
+    word.length.times do |i|
+      ('a'..'z').each do |c|
+        next_word = word.dup
+        next_word[i] = c
+        next unless word_set.include?(next_word)
+
+        return length + 1 if next_word == end_word
+
+        word_set.delete(next_word)
+        queue << [next_word, length + 1]
+      end
+    end
+  end
+
+  return 0
+end
+
+#+end_src
+
+#+begin_src ruby
+def ladder_length(begin_word, end_word, word_list)
+  word_set, queue = Set.new(word_list).delete(begin_word), [[begin_word, 1]]
+
+  until queue.empty?
+    word, length = queue.shift
+    word.length.times do |i|
+      ('a'..'z').map { |c| word.dup.tap { |nw| nw[i] = c } }.select { |nw| word_set.include?(nw) }.each do |next_word|
+        return length + 1 if next_word == end_word
+        word_set.delete(next_word)
+        queue << [next_word, length + 1]
+      end
+    end
+  end
+
+  0
+end
+
+#+end_src
+https://leetcode.cn/problems/word-ladder/description/?envType=study-plan-v2&envId=top-interview-150

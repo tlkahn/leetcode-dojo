@@ -1,0 +1,112 @@
+Design a data structure that supports adding new words and finding if a string matches any previously added string.
+
+Implement the =WordDictionary= class:
+
+- =WordDictionary()= Initializes the object.
+- =void addWord(word)= Adds =word= to the data structure, it can be matched later.
+- =bool search(word)= Returns =true= if there is any string in the data structure that matches =word= or =false= otherwise. =word= may contain dots ='.'= where dots can be matched with any letter.
+
+
+
+*Example:*
+
+#+begin_example
+Input
+["WordDictionary","addWord","addWord","addWord","search","search","search","search"]
+[[],["bad"],["dad"],["mad"],["pad"],["bad"],[".ad"],["b.."]]
+Output
+[null,null,null,null,false,true,true,true]
+
+Explanation
+WordDictionary wordDictionary = new WordDictionary();
+wordDictionary.addWord("bad");
+wordDictionary.addWord("dad");
+wordDictionary.addWord("mad");
+wordDictionary.search("pad"); // return False
+wordDictionary.search("bad"); // return True
+wordDictionary.search(".ad"); // return True
+wordDictionary.search("b.."); // return True
+#+end_example
+
+
+
+*Constraints:*
+
+- =1 <= word.length <= 25=
+- =word= in =addWord= consists of lowercase English letters.
+- =word= in =search= consist of ='.'= or lowercase English letters.
+- There will be at most =2= dots in =word= for =search= queries.
+- At most =10=^{=4=} calls will be made to =addWord= and =search=.
+
+  #+begin_src ruby
+class WordDictionary
+  def initialize
+    @words = Hash.new { |h, k| h[k] = [] }
+  end
+
+  def add_word(word)
+    @words[word.length] << word
+  end
+
+  def search(word)
+    @words[word.length].any? { |w| word.chars.zip(w.chars).all? { |a, b| a == b || a == '.' } }
+  end
+end
+
+# Example usage:
+wordDictionary = WordDictionary.new
+wordDictionary.add_word("bad")
+wordDictionary.add_word("dad")
+wordDictionary.add_word("mad")
+puts wordDictionary.search("pad") # false
+puts wordDictionary.search("bad") # true
+puts wordDictionary.search(".ad") # true
+puts wordDictionary.search("b..") # true
+  #+end_src
+
+  #+begin_src cpp
+#include <unordered_map>
+#include <vector>
+#include <string>
+
+class WordDictionary {
+public:
+    WordDictionary() {}
+
+    void addWord(std::string word) {
+        words[word.length()].push_back(word);
+    }
+
+    bool search(std::string word) {
+        for (const auto& w : words[word.length()]) {
+            bool match = true;
+            for (size_t i = 0; i < word.length(); ++i) {
+                if (word[i] != '.' && word[i] != w[i]) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) return true;
+        }
+        return false;
+    }
+
+private:
+    std::unordered_map<int, std::vector<std::string>> words;
+};
+
+// Example usage:
+int main() {
+    WordDictionary wordDictionary;
+    wordDictionary.addWord("bad");
+    wordDictionary.addWord("dad");
+    wordDictionary.addWord("mad");
+    std::cout << wordDictionary.search("pad") << std::endl; // 0 (false)
+    std::cout << wordDictionary.search("bad") << std::endl; // 1 (true)
+    std::cout << wordDictionary.search(".ad") << std::endl; // 1 (true)
+    std::cout << wordDictionary.search("b..") << std::endl; // 1 (true)
+}
+  #+end_src
+--------------
+
+https://leetcode.cn/problems/design-add-and-search-words-data-structure/description/?envType=study-plan-v2&envId=top-interview-150
