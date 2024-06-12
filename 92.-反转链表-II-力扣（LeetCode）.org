@@ -1,0 +1,70 @@
+Given the =head= of a singly linked list and two integers =left= and =right= where =left <= right=, reverse the nodes of the list from position =left= to position =right=, and return /the reversed list/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/02/19/rev2ex2.jpg]]
+
+#+begin_example
+Input: head = [1,2,3,4,5], left = 2, right = 4
+Output: [1,4,3,2,5]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: head = [5], left = 1, right = 1
+Output: [5]
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the list is =n=.
+- =1 <= n <= 500=
+- =-500 <= Node.val <= 500=
+- =1 <= left <= right <= n=
+
+
+
+*Follow up:* Could you do it in one pass?
+
+--------------
+#+begin_src ruby
+class ListNode
+  attr_accessor :val, :next
+  def initialize(val = 0, _next = nil)
+    @val = val
+    @next = _next
+  end
+end
+
+def reverse_between(head, left, right)
+  dummy = ListNode.new(0, head)
+  prev = dummy
+  (left - 1).times { prev = prev.next }
+
+  current = prev.next
+  (right - left).times do
+    temp = current.next
+    current.next = temp.next
+    temp.next = prev.next
+    prev.next = temp
+  end
+
+  dummy.next
+end
+#+end_src
+
+This code block reverses the nodes in the linked list between the positions =left= and =right=. It iterates =(right - left)= times and performs the following operations:
+
+1. =temp = current.next=: Store the next node of the current node in a temporary variable.
+2. =current.next = temp.next=: Update the next pointer of the current node to skip the next node (temp) and point to the node after it.
+3. =temp.next = prev.next=: Update the next pointer of the temp node to point to the node after the =prev= node.
+4. =prev.next = temp=: Update the next pointer of the =prev= node to point to the temp node, effectively moving the temp node to its new position in the reversed sublist.
+
+These operations effectively reverse the sublist from position =left= to =right= in a single pass.
+
+https://leetcode.cn/problems/reverse-linked-list-ii/?envType=study-plan-v2&envId=top-interview-150

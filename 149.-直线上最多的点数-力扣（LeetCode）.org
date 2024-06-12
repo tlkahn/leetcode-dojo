@@ -1,0 +1,79 @@
+Given an array of =points= where =points[i] = [x=_{=i=}=, y=_{=i=}=]= represents a point on the *X-Y* plane, return /the maximum number of points that lie on the same straight line/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/02/25/plane1.jpg]]
+
+#+begin_example
+Input: points = [[1,1],[2,2],[3,3]]
+Output: 3
+#+end_example
+
+*Example 2:*
+
+[[https://assets.leetcode.com/uploads/2021/02/25/plane2.jpg]]
+
+#+begin_example
+Input: points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+Output: 4
+#+end_example
+
+
+
+*Constraints:*
+
+- =1 <= points.length <= 300=
+- =points[i].length == 2=
+- =-10=^{=4=}= <= x=_{=i=}=, y=_{=i=}= <= 10=^{=4=}
+- All the =points= are *unique*.
+
+--------------
+#+begin_src ruby
+def max_points_on_line(points)
+  max_points = 0
+
+  points.each_with_index do |point1, i|
+    slopes = Hash.new(0)
+    duplicates = 1
+
+    points[i+1..-1].each do |point2|
+      if point1 == point2
+        duplicates += 1
+      else
+        dx = point1[0] - point2[0]
+        dy = point1[1] - point2[1]
+        slope = dx == 0 ? Float::INFINITY : Rational(dy, dx)
+        slopes[slope] += 1
+      end
+    end
+
+    max_points = [max_points, slopes.values.max.to_i + duplicates].max
+  end
+
+  max_points
+end
+
+#+end_src
+
+#+begin_src ruby
+def max_points_on_line(points)
+  points.each_with_index.map do |point1, i|
+    slopes, duplicates = Hash.new(0), 1
+
+    points[i+1..-1].each do |point2|
+      duplicates += 1 if point1 == point2
+      next if point1 == point2
+
+      dx, dy = point1[0] - point2[0], point1[1] - point2[1]
+      slope = dx.zero? ? Float::INFINITY : Rational(dy, dx)
+      slopes[slope] += 1
+    end
+
+    slopes.values.max.to_i + duplicates
+  end.max
+end
+
+#+end_src
+https://leetcode.cn/problems/max-points-on-a-line/?envType=study-plan-v2&envId=top-interview-150

@@ -51,23 +51,30 @@ Explanation: ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
 - =tokens[i]= is either an operator: ="+"=, ="-"=, ="*"=, or ="/"=, or an integer in the range =[-200, 200]=.
 
 #+begin_src ruby
-def evaluate_rpn(tokens)
-  stack = []
+#include <vector>
+#include <string>
+#include <stack>
 
-  tokens.each do |token|
-    case token
-    when '+', '-', '*', '/'
-      b = stack.pop
-      a = stack.pop
-      result = a.send(token, b)
-      stack.push(token == '/' ? result.div : result)
-    else
-      stack.push(token.to_i)
-    end
-  end
+int evalRPN(std::vector<std::string>& tokens) {
+    std::stack<int> stk;
 
-  stack.pop
-end
+    for (const auto& token : tokens) {
+        if (token == "+" || token == "-" || token == "*" || token == "/") {
+            int b = stk.top(); stk.pop();
+            int a = stk.top(); stk.pop();
+            int result = 0;
+            if (token == "+") result = a + b;
+            else if (token == "-") result = a - b;
+            else if (token == "*") result = a * b;
+            else if (token == "/") result = a / b;
+            stk.push(result);
+        } else {
+            stk.push(std::stoi(token));
+        }
+    }
+
+    return stk.top();
+}
 #+end_src
 
 --------------

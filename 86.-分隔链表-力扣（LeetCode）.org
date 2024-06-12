@@ -1,0 +1,82 @@
+Given the =head= of a linked list and a value =x=, partition it such that all nodes *less than* =x= come before nodes *greater than or equal* to =x=.
+
+You should *preserve* the original relative order of the nodes in each of the two partitions.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/01/04/partition.jpg]]
+
+#+begin_example
+Input: head = [1,4,3,2,5,2], x = 3
+Output: [1,2,2,4,3,5]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: head = [2,1], x = 2
+Output: [1,2]
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the list is in the range =[0, 200]=.
+- =-100 <= Node.val <= 100=
+- =-200 <= x <= 200=
+
+  #+begin_src ruby
+class ListNode
+  attr_accessor :val, :next
+  def initialize(val = 0, _next = nil)
+    @val = val
+    @next = _next
+  end
+end
+
+def partition(head, x)
+  before_head = ListNode.new
+  before = before_head
+  after_head = ListNode.new
+  after = after_head
+
+  while head
+    if head.val < x
+      before.next = head
+      before = before.next
+    else
+      after.next = head
+      after = after.next
+    end
+    head = head.next
+  end
+
+  after.next = nil
+  before.next = after_head.next
+
+  before_head.next
+end
+  #+end_src
+
+#+begin_src ruby
+def partition(head, x)
+  before, after = ListNode.new, ListNode.new
+  b_curr, a_curr = before, after
+
+  while head
+    target = head.val < x ? (b_curr.next = head; b_curr = b_curr.next) : (a_curr.next = head; a_curr = a_curr.next)
+    head = head.next
+  end
+
+  a_curr.next = nil
+  b_curr.next = after.next
+
+  before.next
+end
+#+end_src
+--------------
+
+https://leetcode.cn/problems/partition-list/description/?envType=study-plan-v2&envId=top-interview-150

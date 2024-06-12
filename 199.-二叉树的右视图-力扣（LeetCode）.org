@@ -1,0 +1,66 @@
+Given the =root= of a binary tree, imagine yourself standing on the *right side* of it, return /the values of the nodes you can see ordered from top to bottom/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/02/14/tree.jpg]]
+
+#+begin_example
+Input: root = [1,2,3,null,5,null,4]
+Output: [1,3,4]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: root = [1,null,3]
+Output: [1,3]
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: root = []
+Output: []
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the tree is in the range =[0, 100]=.
+- =-100 <= Node.val <= 100=
+
+#+begin_src ruby
+class TreeNode
+  attr_accessor :val, :left, :right
+  def initialize(val=0, left=nil, right=nil)
+    @val = val
+    @left = left
+    @right = right
+  end
+end
+
+def right_side_view(root)
+  return [] if root.nil?
+  result = []
+  queue = [root]
+
+  while !queue.empty?
+    level_size = queue.size
+    level_size.times do |i|
+      node = queue.shift
+      result << node.val if i == level_size - 1
+      queue << node.left if node.left
+      queue << node.right if node.right
+    end
+  end
+
+  result
+end
+#+end_src
+
+--------------
+
+https://leetcode.cn/problems/binary-tree-right-side-view/description/?envType=study-plan-v2&envId=top-interview-150

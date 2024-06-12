@@ -1,0 +1,59 @@
+Given the =root= of a binary tree, return /the level order traversal of its nodes' values/. (i.e., from left to right, level by level).
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg]]
+
+#+begin_example
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[9,20],[15,7]]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: root = [1]
+Output: [[1]]
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: root = []
+Output: []
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the tree is in the range =[0, 2000]=.
+- =-1000 <= Node.val <= 1000=
+
+#+begin_src ruby
+def level_order(root)
+  return [] if root.nil?
+  result = []
+  queue = [root]
+
+  while !queue.empty?
+    level = []
+    queue.size.times do
+      node = queue.shift
+      level << node.val
+      queue << node.left if node.left
+      queue << node.right if node.right
+    end
+    result << level
+  end
+
+  result
+end
+
+#+end_src
+
+--------------
+
+https://leetcode.cn/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150

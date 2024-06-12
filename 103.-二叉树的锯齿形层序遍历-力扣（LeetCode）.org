@@ -1,0 +1,61 @@
+Given the =root= of a binary tree, return /the zigzag level order traversal of its nodes' values/. (i.e., from left to right, then right to left for the next level and alternate between).
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg]]
+
+#+begin_example
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: root = [1]
+Output: [[1]]
+#+end_example
+
+*Example 3:*
+
+#+begin_example
+Input: root = []
+Output: []
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the tree is in the range =[0, 2000]=.
+- =-100 <= Node.val <= 100=
+
+#+begin_src ruby
+def zigzag_level_order(root)
+  return [] if root.nil?
+  results = []
+  queue = [root]
+  left_to_right = true
+
+  while !queue.empty?
+    level = []
+    queue.size.times do
+      node = queue.shift
+      level << node.val
+      queue.push(node.left) if node.left
+      queue.push(node.right) if node.right
+    end
+    results << (left_to_right ? level : level.reverse)
+    left_to_right = !left_to_right
+  end
+
+  results
+end
+
+#+end_src
+
+--------------
+
+https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/description/?envType=study-plan-v2&envId=top-interview-150

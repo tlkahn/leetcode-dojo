@@ -1,0 +1,65 @@
+Given the =head= of a sorted linked list, /delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list/. Return /the linked list *sorted* as well/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/01/04/linkedlist1.jpg]]
+
+#+begin_example
+Input: head = [1,2,3,3,4,4,5]
+Output: [1,2,5]
+#+end_example
+
+*Example 2:*
+
+[[https://assets.leetcode.com/uploads/2021/01/04/linkedlist2.jpg]]
+
+#+begin_example
+Input: head = [1,1,1,2,3]
+Output: [2,3]
+#+end_example
+
+
+
+*Constraints:*
+
+- The number of nodes in the list is in the range =[0, 300]=.
+- =-100 <= Node.val <= 100=
+- The list is guaranteed to be *sorted* in ascending order.
+
+--------------
+#+begin_src ruby
+# Definition for singly-linked list.
+class ListNode
+    attr_accessor :val, :next
+    def initialize(val = 0, _next = nil)
+        @val = val
+        @next = _next
+    end
+end
+
+def delete_duplicates(head)
+  return nil if head.nil?
+
+  dummy = ListNode.new(0)
+  dummy.next = head
+  prev = dummy
+
+  while head
+    if head.next && head.val == head.next.val
+      while head.next && head.val == head.next.val
+        head = head.next
+      end
+      prev.next = head.next
+    else
+      prev = prev.next
+    end
+    head = head.next
+  end
+
+  dummy.next
+end
+#+end_src
+
+https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/?envType=study-plan-v2&envId=top-interview-150

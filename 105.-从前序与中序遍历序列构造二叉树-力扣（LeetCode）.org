@@ -1,0 +1,57 @@
+Given two integer arrays =preorder= and =inorder= where =preorder= is the preorder traversal of a binary tree and =inorder= is the inorder traversal of the same tree, construct and return /the binary tree/.
+
+
+
+*Example 1:*
+
+[[https://assets.leetcode.com/uploads/2021/02/19/tree.jpg]]
+
+#+begin_example
+Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+Output: [3,9,20,null,null,15,7]
+#+end_example
+
+*Example 2:*
+
+#+begin_example
+Input: preorder = [-1], inorder = [-1]
+Output: [-1]
+#+end_example
+
+
+
+*Constraints:*
+
+- =1 <= preorder.length <= 3000=
+- =inorder.length == preorder.length=
+- =-3000 <= preorder[i], inorder[i] <= 3000=
+- =preorder= and =inorder= consist of *unique* values.
+- Each value of =inorder= also appears in =preorder=.
+- =preorder= is *guaranteed* to be the preorder traversal of the tree.
+- =inorder= is *guaranteed* to be the inorder traversal of the tree.
+
+  #+begin_src ruby
+class TreeNode
+  attr_accessor :val, :left, :right
+  def initialize(val = 0, left = nil, right = nil)
+    @val = val
+    @left = left
+    @right = right
+  end
+end
+
+def build_tree(preorder, inorder)
+  return nil if inorder.empty?
+
+  root = TreeNode.new(preorder.shift)
+  root_index = inorder.index(root.val)
+
+  root.left = build_tree(preorder, inorder[0...root_index])
+  root.right = build_tree(preorder, inorder[root_index + 1..-1])
+
+  root
+end
+  #+end_src
+--------------
+
+https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/?envType=study-plan-v2&envId=top-interview-150
